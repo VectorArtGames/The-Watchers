@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -25,5 +24,12 @@ public class PlayerMovement : MonoBehaviour
     {
         var dir = transform.TransformDirection(Movement);
         controller.SimpleMove(new Vector3(dir.x, 0, dir.z) * Speed);
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        controller.enabled = false;
+        transform.position = position;
+        controller.enabled = true;
     }
 }

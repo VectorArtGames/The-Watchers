@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +12,7 @@ public class EnemyAI : MonoBehaviour, INoiseAI
      * If can see player, increase aggression.
      * 
      */
-    public EnemyAIState CurrentState = Idle;
+    public EnemyAIState CurrentState = IdleState;
 
     public float SightRange;
     private PlayerMovement player;
@@ -27,15 +28,17 @@ public class EnemyAI : MonoBehaviour, INoiseAI
     public Transform destination;
     public NavMeshAgent agent;
 
-    public Vector3 LastSeenPoint;
+    private Vector3 LastSeenPoint;
 
-    public Vector3 initialPosition;
+    private Vector3 initialPosition;
+    private NoiseAlert alert;
 
     private void Awake()
     {
         TryGetComponent(out agent);
         player = GameObject.FindObjectOfType<PlayerMovement>();
         initialPosition = transform.position;
+        alert = transform.parent.GetComponentInChildren<NoiseAlert>();
     }
 
     void Start()
@@ -52,8 +55,8 @@ public class EnemyAI : MonoBehaviour, INoiseAI
     {
         switch (CurrentState)
         {
-            case Idle:
-
+            case IdleState:
+                Idle();
                 break;
             case Attacking:
 
@@ -97,18 +100,33 @@ public class EnemyAI : MonoBehaviour, INoiseAI
         Debug.Log(agent.pathStatus.ToString());
 
         if (agent.remainingDistance <= 0.5f)
-            CurrentState = Idle;
+            CurrentState = IdleState;
+
+        alert.SetState(false);
     }
 
+    private void Idle()
+    {
+        alert.SetState(false);
+    }
     private void Chase()
     {
 
-        if (agent.destination != LastSeenPoint)
-            agent.SetDestination(LastSeenPoint);
+        if (agent.destination != LastSeenPoint && agent.SetDestination(LastSeenPoint))
+            alert?.ChangeDesination(LastSeenPoint);
 
         Debug.Log(agent.remainingDistance);
         if (agent.remainingDistance <= 0.5)
+        {
             CurrentState = Discovering;
+            agent.speed = 5f;
+        }
+        else
+        {
+            agent.speed = 15f;
+        }
+
+        alert.SetState(true);
     }
 
     public void AddNoise(Vector3 point)
@@ -131,4 +149,4 @@ public class EnemyAI : MonoBehaviour, INoiseAI
     }
 }
 
-public enum EnemyAIState { Idle, Discovering, Chasing, Lost, Attacking, Reset }
+public enum EnemyAIState { IdleState, Discovering, Chasing, Lost, Attacking, Reset }

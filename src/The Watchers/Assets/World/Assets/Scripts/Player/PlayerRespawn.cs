@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,7 +30,7 @@ public class PlayerRespawn : MonoBehaviour
     {
         if (player.transform.position.y <= DeadZoneY)
         {
-            if (NavMesh.FindClosestEdge(player.transform.position, out NavMeshHit hit, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(player.transform.position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
             {
                 player?.Teleport(hit.position);
                 Debug.Log("yep");

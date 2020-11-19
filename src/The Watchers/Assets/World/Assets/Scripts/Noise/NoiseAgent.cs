@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 public class NoiseAgent : MonoBehaviour
@@ -17,7 +18,7 @@ public class NoiseAgent : MonoBehaviour
     {
         if (controller == null) return;
         var v = controller.velocity;
-        if (v.x != 0 || v.z != 0)
+        if ((v.x != 0 || v.z != 0) && controller.isGrounded)
             GenerateNoise();
     }
 

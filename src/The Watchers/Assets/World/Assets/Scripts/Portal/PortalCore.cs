@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using UnityEditor;
-
 using UnityEngine;
 
 public class PortalCore : MonoBehaviour
@@ -90,30 +88,5 @@ public class PortalCore : MonoBehaviour
         propertyBlock.SetColor("PortalColor", PortalColor);
         mesh.SetPropertyBlock(propertyBlock);
 
-    }
-}
-
-[CustomEditor(typeof(PortalCore))]
-[CanEditMultipleObjects]
-public class PortalCoreInspector : Editor
-{
-    SerializedProperty colorProperty;
-
-    private void OnEnable()
-    {
-        colorProperty = serializedObject.FindProperty("PortalColor");
-    }
-
-    public override void OnInspectorGUI()
-    {
-
-        if (!(target is PortalCore portal)) return;
-
-        base.DrawDefaultInspector();
-        serializedObject.Update();
-        GUILayout.Space(15f);
-        GUILayout.Label("Debugging");
-        EditorGUILayout.PropertyField(colorProperty);
-        serializedObject.ApplyModifiedProperties();
     }
 }

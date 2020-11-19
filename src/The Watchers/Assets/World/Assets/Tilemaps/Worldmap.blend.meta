@@ -3,7 +3,27 @@ guid: 4df0f88d0c3780b458659270845f5d13
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DirtMaterial
+    second: {fileID: -1512001744017052602, guid: 4df0f88d0c3780b458659270845f5d13, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GrassMaterial
+    second: {fileID: -1512001744017052602, guid: 4df0f88d0c3780b458659270845f5d13, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StairMaterial
+    second: {fileID: -1512001744017052602, guid: 4df0f88d0c3780b458659270845f5d13, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StoneMaterial
+    second: {fileID: -1512001744017052602, guid: 4df0f88d0c3780b458659270845f5d13, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0
